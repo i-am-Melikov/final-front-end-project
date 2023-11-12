@@ -1,53 +1,5 @@
 $(document).ready(function () {
 
-    // scroll to top
-    $(window).on('scroll', function () {
-    if ($(this).scrollTop() > 600) {
-        $('.scroll-top').removeClass('not-visible');
-    } else {
-        $('.scroll-top').addClass('not-visible');
-    }
-    });
-    $('.scroll-top').click(function(){
-    $('html, body').animate({
-        scrollTop: 0
-    }, 100);
-    });
-
-    var backdrop = document.getElementById('modalBackdrop');
-
-    $(".mobile-facets__open").click( function(e){
-        e.preventDefault();
-        document.getElementById('mobile-filter-content').classList.remove('d-none');
-        document.getElementById('mobile-filter-content').classList.add('d-block');
-        document.getElementById('close-filter').classList.remove('d-none');
-        document.getElementById('close-filter').classList.add('d-block');
-        document.getElementById('mobile-filter-content').classList.add('filterOpen');
-        $('body').addClass('mobile-open no-scroll');
-        backdrop.style.display = 'block';
-	})
-    $(".close-filter").click(function(e){
-        e.preventDefault();
-        document.getElementById('mobile-filter-content').classList.remove('d-block');
-        document.getElementById('mobile-filter-content').classList.add('d-none');
-        document.getElementById('close-filter').classList.remove('d-block');
-        document.getElementById('close-filter').classList.add('d-none');
-        document.getElementById('mobile-filter-content').classList.remove('filterOpen');
-        $('body').removeClass('mobile-open no-scroll');
-        backdrop.style.display = 'none';
-	})
-    backdrop.addEventListener('click', function(e) {
-        if (e.target === backdrop) {
-            document.getElementById('mobile-filter-content').classList.remove('d-block');
-            document.getElementById('mobile-filter-content').classList.add('d-none');
-            document.getElementById('close-filter').classList.remove('d-block');
-            document.getElementById('close-filter').classList.add('d-none');
-            document.getElementById('mobile-filter-content').classList.remove('filterOpen');
-            $('body').removeClass('mobile-open no-scroll');
-            backdrop.style.display = 'none';
-        }
-    });
-
     $('.quickview-btn').click(function(e){
         $('.slider-for').slick({
             slidesToShow: 1,
@@ -228,6 +180,56 @@ $(document).ready(function () {
             }
         ]
     });
+
+    // scroll to top
+    $(window).on('scroll', function () {
+    if ($(this).scrollTop() > 600) {
+        $('.scroll-top').removeClass('not-visible');
+    } else {
+        $('.scroll-top').addClass('not-visible');
+    }
+    });
+    $('.scroll-top').click(function(){
+    $('html, body').animate({
+        scrollTop: 0
+    }, 100);
+    });
+
+
+
+    var backdrop = document.getElementById('modalBackdrop');
+
+    $(".mobile-facets__open").click( function(e){
+        e.preventDefault();
+        document.getElementById('mobile-filter-content').classList.remove('d-none');
+        document.getElementById('mobile-filter-content').classList.add('d-block');
+        document.getElementById('close-filter').classList.remove('d-none');
+        document.getElementById('close-filter').classList.add('d-block');
+        document.getElementById('mobile-filter-content').classList.add('filterOpen');
+        $('body').addClass('mobile-open no-scroll');
+        backdrop.style.display = 'block';
+	})
+    $(".close-filter").click(function(e){
+        e.preventDefault();
+        document.getElementById('mobile-filter-content').classList.remove('d-block');
+        document.getElementById('mobile-filter-content').classList.add('d-none');
+        document.getElementById('close-filter').classList.remove('d-block');
+        document.getElementById('close-filter').classList.add('d-none');
+        document.getElementById('mobile-filter-content').classList.remove('filterOpen');
+        $('body').removeClass('mobile-open no-scroll');
+        backdrop.style.display = 'none';
+	})
+    backdrop.addEventListener('click', function(e) {
+        if (e.target === backdrop) {
+            document.getElementById('mobile-filter-content').classList.remove('d-block');
+            document.getElementById('mobile-filter-content').classList.add('d-none');
+            document.getElementById('close-filter').classList.remove('d-block');
+            document.getElementById('close-filter').classList.add('d-none');
+            document.getElementById('mobile-filter-content').classList.remove('filterOpen');
+            $('body').removeClass('mobile-open no-scroll');
+            backdrop.style.display = 'none';
+        }
+    });
     
   	// offcanvas search form active start
 	$(".offcanvas-btn").on('click', function(){
@@ -306,18 +308,38 @@ jQuery(window).resize(function() {
 
 //quantity section start
 document.addEventListener('DOMContentLoaded', function () {
-    var quantityInput = document.querySelector('.quantity__input');
-    var plusButton = document.querySelector('.quantity-increment');
-    var minusButton = document.querySelector('.quantity-decrement');
+    var quantityInputs = document.querySelectorAll('.quantity__input');
+    var plusButtons = document.querySelectorAll('.quantity-increment');
+    var minusButtons = document.querySelectorAll('.quantity-decrement');
 
-    plusButton.addEventListener('click', function () {
-        quantityInput.value = parseInt(quantityInput.value, 10) + 1;
-    });
+    quantityInputs.forEach(function (quantityInput, index) {
+        plusButtons[index].addEventListener('click', function () {
+            quantityInput.value = parseInt(quantityInput.value, 10) + 1;
+        });
 
-    minusButton.addEventListener('click', function () {
-        if (parseInt(quantityInput.value, 10) > 1) {
-            quantityInput.value = parseInt(quantityInput.value, 10) - 1;
-        }
+        minusButtons[index].addEventListener('click', function () {
+            if (parseInt(quantityInput.value, 10) > 1) {
+                quantityInput.value = parseInt(quantityInput.value, 10) - 1;
+            }
+        });
     });
 });
 //quantity section end
+
+//cart notification start
+document.addEventListener('DOMContentLoaded', function() {
+    var cartBtns = document.querySelectorAll('.add-cart-btn');
+    var cartNotifClose = document.querySelector('.cart-notification__close');
+    var cartNotif = document.getElementById('cart-notification');
+    cartBtns.forEach(function(cartBtn){
+        cartBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            cartNotif.classList.add('active');
+            console.log('ffasfas');
+        });
+        cartNotifClose.addEventListener('click', function() {
+            cartNotif.classList.remove('active');
+        });
+    })
+});
+//cart notification end
